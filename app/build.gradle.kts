@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.activity)
     implementation("androidx.fragment:fragment:1.8.2")
     implementation(libs.constraintlayout)
+    implementation(libs.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
