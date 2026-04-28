@@ -14,7 +14,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders["MAPS_API_KEY"] = project.findProperty("MAPS_API_KEY") ?: ""
     }
 
     buildTypes {
@@ -33,18 +32,17 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation("androidx.fragment:fragment:1.8.2")
     implementation(libs.constraintlayout)
     implementation(libs.recyclerview)
+    implementation(libs.play.services.location)
+    implementation(libs.osmdroid.android)
+    implementation(libs.core.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation(libs.play.services.maps)
-    implementation(libs.play.services.location)
-    implementation(libs.core.ktx)
-
 }
