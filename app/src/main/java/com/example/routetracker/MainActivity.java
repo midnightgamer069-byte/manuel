@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -59,6 +61,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
 
     private MapView mapView;
     private Polyline currentRouteOverlay;
+    private Marker liveLocationMarker;
 
     private FusedLocationProviderClient fusedLocationClient;
     private final List<TrackPoint> currentRoutePoints = new ArrayList<>();
@@ -116,8 +119,12 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
                 drawCurrentRoute();
             }
 
-            mapView.getController().setZoom(18.0);
-            mapView.getController().setCenter(current);
+            updateLiveLocationMarker(current);
+
+            if (isTracking) {
+                mapView.getController().setZoom(18.0);
+                mapView.getController().animateTo(current);
+            }
         }
     };
 
@@ -156,6 +163,12 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         mapView.setMultiTouchControls(true);
         mapView.getController().setZoom(16.0);
         mapView.getController().setCenter(new GeoPoint(19.4326, -99.1332));
+
+        liveLocationMarker = new Marker(mapView);
+        liveLocationMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+        liveLocationMarker.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_live_location_dot));
+        liveLocationMarker.setTitle("Mi ubicación");
+        mapView.getOverlays().add(liveLocationMarker);
     }
 
     private void setupHistory() {
@@ -228,6 +241,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         btnStartStop.setBackgroundResource(R.drawable.bg_start_button);
         tvStatus.setText("Última ruta guardada");
 
+        fitRouteBoundsOnMainMap(currentRoutePoints);
         Toast.makeText(this, "Ruta guardada en historial", Toast.LENGTH_SHORT).show();
     }
 
@@ -329,6 +343,28 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         });
 
         dialog.show();
+    }
+
+    private void updateLiveLocationMarker(GeoPoint current) {
+        if (liveLocationMarker == null) {
+            return;
+        }
+        liveLocationMarker.setPosition(current);
+        mapView.invalidate();
+    }
+
+    private void fitRouteBoundsOnMainMap(List<TrackPoint> points) {
+        if (points == null || points.isEmpty()) {
+            return;
+        }
+
+        List<GeoPoint> geoPoints = new ArrayList<>();
+        for (TrackPoint point : points) {
+            geoPoints.add(new GeoPoint(point.lat, point.lon));
+        }
+
+        BoundingBox box = BoundingBox.fromGeoPointsSafe(geoPoints);
+        mapView.zoomToBoundingBox(box, true, 120);
     }
 
     private void updateStatsUI(long elapsedMs, double distanceMeters) {
