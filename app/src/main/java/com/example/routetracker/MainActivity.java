@@ -3,6 +3,7 @@ package com.example.routetracker;
 import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -67,6 +68,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
     private final List<TrackPoint> currentRoutePoints = new ArrayList<>();
 
     private Button btnStartStop;
+    private Button btnOpenCustomRoutes;
     private TextView tvStatus;
     private TextView tvTime;
     private TextView tvDistance;
@@ -144,12 +146,14 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         loadHistory();
 
         btnStartStop.setOnClickListener(v -> toggleTracking());
+        btnOpenCustomRoutes.setOnClickListener(v -> startActivity(new Intent(this, CustomRouteActivity.class)));
         startLocationUpdates();
     }
 
     private void bindViews() {
         mapView = findViewById(R.id.mapView);
         btnStartStop = findViewById(R.id.btnStartStop);
+        btnOpenCustomRoutes = findViewById(R.id.btnOpenCustomRoutes);
         tvStatus = findViewById(R.id.tvStatus);
         tvTime = findViewById(R.id.tvTime);
         tvDistance = findViewById(R.id.tvDistance);
