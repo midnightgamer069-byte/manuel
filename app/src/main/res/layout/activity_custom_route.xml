@@ -1,48 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#020617"
     tools:context=".CustomRouteActivity">
 
-    <org.osmdroid.views.MapView
-        android:id="@+id/customMapView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp"
-        android:background="@drawable/bg_glass_card">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvCustomInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:text="Toca el mapa para elegir inicio y fin"/>
+        <org.osmdroid.views.MapView
+            android:id="@+id/customMapView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:background="@drawable/bg_glass_card">
 
-            <Button android:id="@+id/btnSaveCustom" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Guardar camino"/>
-            <Button android:id="@+id/btnStartCustom" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Iniciar"/>
-            <Button android:id="@+id/btnFinishCustom" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Finalizar"/>
+            <TextView
+                android:id="@+id/tvCustomInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:text="Toca el mapa para elegir inicio y fin"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <Button android:id="@+id/btnSaveCustom" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Guardar camino"/>
+                <Button android:id="@+id/btnStartCustom" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Iniciar"/>
+                <Button android:id="@+id/btnFinishCustom" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="Finalizar"/>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCustomHistory"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginTop="10dp"/>
+
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCustomHistory"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginTop="10dp"/>
-
     </LinearLayout>
-</LinearLayout>
+
+    <Button
+        android:id="@+id/btnCloseCustom"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="12dp"
+        android:backgroundTint="#DC2626"
+        android:text="X"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+</FrameLayout>

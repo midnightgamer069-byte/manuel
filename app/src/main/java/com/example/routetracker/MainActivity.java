@@ -41,6 +41,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.osmdroid.config.Configuration;
+import org.osmdroid.events.MapEventsReceiver;
+import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
@@ -69,6 +71,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
 
     private Button btnStartStop;
     private Button btnOpenCustomRoutes;
+    private Button btnCenterLocation;
     private TextView tvStatus;
     private TextView tvTime;
     private TextView tvDistance;
@@ -77,6 +80,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
     private TextView tvCompassHeading;
 
     private boolean isTracking = false;
+    private boolean followUserOnMap = false;
     private long walkStartTime = 0L;
     private final Handler timerHandler = new Handler(Looper.getMainLooper());
     private double distanceMeters = 0.0;
@@ -123,7 +127,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
 
             updateLiveLocationMarker(current);
 
-            if (isTracking) {
+            if (followUserOnMap) {
                 mapView.getController().setZoom(18.0);
                 mapView.getController().animateTo(current);
             }
@@ -147,6 +151,12 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
 
         btnStartStop.setOnClickListener(v -> toggleTracking());
         btnOpenCustomRoutes.setOnClickListener(v -> startActivity(new Intent(this, CustomRouteActivity.class)));
+        btnCenterLocation.setOnClickListener(v -> {
+            followUserOnMap = true;
+            if (liveLocationMarker != null && liveLocationMarker.getPosition() != null) {
+                mapView.getController().animateTo(liveLocationMarker.getPosition());
+            }
+        });
         startLocationUpdates();
     }
 
@@ -154,6 +164,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         mapView = findViewById(R.id.mapView);
         btnStartStop = findViewById(R.id.btnStartStop);
         btnOpenCustomRoutes = findViewById(R.id.btnOpenCustomRoutes);
+        btnCenterLocation = findViewById(R.id.btnCenterLocation);
         tvStatus = findViewById(R.id.tvStatus);
         tvTime = findViewById(R.id.tvTime);
         tvDistance = findViewById(R.id.tvDistance);
@@ -173,6 +184,19 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         liveLocationMarker.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_live_location_dot));
         liveLocationMarker.setTitle("Mi ubicación");
         mapView.getOverlays().add(liveLocationMarker);
+
+        mapView.getOverlays().add(new MapEventsOverlay(new MapEventsReceiver() {
+            @Override
+            public boolean singleTapConfirmedHelper(GeoPoint p) {
+                return false;
+            }
+
+            @Override
+            public boolean longPressHelper(GeoPoint p) {
+                followUserOnMap = false;
+                return false;
+            }
+        }));
     }
 
     private void setupHistory() {
@@ -206,6 +230,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         }
 
         isTracking = true;
+        followUserOnMap = true;
         walkStartTime = System.currentTimeMillis();
         distanceMeters = 0;
         lastTrackedLocation = null;
@@ -226,6 +251,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
 
     private void stopWalk() {
         isTracking = false;
+        followUserOnMap = false;
         timerHandler.removeCallbacks(timerRunnable);
 
         if (currentRoutePoints.size() < 2) {

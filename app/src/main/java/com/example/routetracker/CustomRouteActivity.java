@@ -56,6 +56,8 @@ public class CustomRouteActivity extends AppCompatActivity {
         mapView.getController().setZoom(15.0);
         mapView.getController().setCenter(new GeoPoint(19.4326, -99.1332));
 
+        findViewById(R.id.btnCloseCustom).setOnClickListener(v -> finish());
+
         setupTapOverlay();
         setupButtons();
         setupRecycler();

@@ -122,6 +122,14 @@
 
 
             <Button
+                android:id="@+id/btnCenterLocation"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="8dp"
+                android:text="Ir a mi ubicación"
+                android:textAllCaps="false" />
+
+            <Button
                 android:id="@+id/btnOpenCustomRoutes"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
