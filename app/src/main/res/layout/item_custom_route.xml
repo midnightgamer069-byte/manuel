@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/bg_glass_card">
+
+    <TextView
+        android:id="@+id/tvCustomTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:text="Camino custom"/>
+
+    <TextView
+        android:id="@+id/tvCustomSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#CBE4FF"
+        android:text="Intentos: 0 · Mejor: --"/>
+</LinearLayout>
