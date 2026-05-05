@@ -137,7 +137,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(com.Manuel.routetracker.R.layout.activity_main);
 
         Configuration.getInstance().setUserAgentValue(getPackageName());
 
@@ -161,16 +161,16 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
     }
 
     private void bindViews() {
-        mapView = findViewById(R.id.mapView);
-        btnStartStop = findViewById(R.id.btnStartStop);
-        btnOpenCustomRoutes = findViewById(R.id.btnOpenCustomRoutes);
-        btnCenterLocation = findViewById(R.id.btnCenterLocation);
-        tvStatus = findViewById(R.id.tvStatus);
-        tvTime = findViewById(R.id.tvTime);
-        tvDistance = findViewById(R.id.tvDistance);
-        tvPace = findViewById(R.id.tvPace);
-        ivCompass = findViewById(R.id.ivCompass);
-        tvCompassHeading = findViewById(R.id.tvCompassHeading);
+        mapView = findViewById(com.Manuel.routetracker.R.id.mapView);
+        btnStartStop = findViewById(com.Manuel.routetracker.R.id.btnStartStop);
+        btnOpenCustomRoutes = findViewById(com.Manuel.routetracker.R.id.btnOpenCustomRoutes);
+        btnCenterLocation = findViewById(com.Manuel.routetracker.R.id.btnCenterLocation);
+        tvStatus = findViewById(com.Manuel.routetracker.R.id.tvStatus);
+        tvTime = findViewById(com.Manuel.routetracker.R.id.tvTime);
+        tvDistance = findViewById(com.Manuel.routetracker.R.id.tvDistance);
+        tvPace = findViewById(com.Manuel.routetracker.R.id.tvPace);
+        ivCompass = findViewById(com.Manuel.routetracker.R.id.ivCompass);
+        tvCompassHeading = findViewById(com.Manuel.routetracker.R.id.tvCompassHeading);
     }
 
     private void setupMainMap() {
@@ -181,7 +181,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
 
         liveLocationMarker = new Marker(mapView);
         liveLocationMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-        liveLocationMarker.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_live_location_dot));
+        liveLocationMarker.setIcon(ContextCompat.getDrawable(this, com.Manuel.routetracker.R.drawable.ic_live_location_dot));
         liveLocationMarker.setTitle("Mi ubicación");
         mapView.getOverlays().add(liveLocationMarker);
 
@@ -200,7 +200,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
     }
 
     private void setupHistory() {
-        RecyclerView rvHistory = findViewById(R.id.rvHistory);
+        RecyclerView rvHistory = findViewById(com.Manuel.routetracker.R.id.rvHistory);
         rvHistory.setLayoutManager(new LinearLayoutManager(this));
         historyAdapter = new HistoryAdapter(history);
         rvHistory.setAdapter(historyAdapter);
@@ -242,7 +242,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         }
 
         btnStartStop.setText("Finalizar caminata");
-        btnStartStop.setBackgroundResource(R.drawable.bg_stop_button);
+        btnStartStop.setBackgroundResource(com.Manuel.routetracker.R.drawable.bg_stop_button);
         tvStatus.setText("Caminata en curso…");
 
         timerHandler.removeCallbacks(timerRunnable);
@@ -257,7 +257,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         if (currentRoutePoints.size() < 2) {
             tvStatus.setText("Ruta muy corta para guardar");
             btnStartStop.setText("Iniciar caminata");
-            btnStartStop.setBackgroundResource(R.drawable.bg_start_button);
+            btnStartStop.setBackgroundResource(com.Manuel.routetracker.R.drawable.bg_start_button);
             return;
         }
 
@@ -268,7 +268,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         saveHistory();
 
         btnStartStop.setText("Iniciar caminata");
-        btnStartStop.setBackgroundResource(R.drawable.bg_start_button);
+        btnStartStop.setBackgroundResource(com.Manuel.routetracker.R.drawable.bg_start_button);
         tvStatus.setText("Última ruta guardada");
 
         fitRouteBoundsOnMainMap(currentRoutePoints);
@@ -316,11 +316,11 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
     }
 
     private void showRouteDetailDialog(RouteRecord record) {
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_route_detail, null, false);
+        View view = LayoutInflater.from(this).inflate(com.Manuel.routetracker.R.layout.dialog_route_detail, null, false);
 
-        TextView tvDialogTitle = view.findViewById(R.id.tvDialogTitle);
-        TextView tvDialogSummary = view.findViewById(R.id.tvDialogSummary);
-        MapView detailMapView = view.findViewById(R.id.detailMapView);
+        TextView tvDialogTitle = view.findViewById(com.Manuel.routetracker.R.id.tvDialogTitle);
+        TextView tvDialogSummary = view.findViewById(com.Manuel.routetracker.R.id.tvDialogSummary);
+        MapView detailMapView = view.findViewById(com.Manuel.routetracker.R.id.detailMapView);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy, HH:mm", Locale.getDefault());
         tvDialogTitle.setText("Ruta " + sdf.format(new Date(record.dateMs)));
@@ -629,7 +629,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         @Override
         public HistoryVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_route_history, parent, false);
+                    .inflate(com.Manuel.routetracker.R.layout.item_route_history, parent, false);
             return new HistoryVH(view);
         }
 
@@ -661,8 +661,8 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
 
             HistoryVH(@NonNull View itemView) {
                 super(itemView);
-                tvRouteDate = itemView.findViewById(R.id.tvRouteDate);
-                tvRouteSummary = itemView.findViewById(R.id.tvRouteSummary);
+                tvRouteDate = itemView.findViewById(com.Manuel.routetracker.R.id.tvRouteDate);
+                tvRouteSummary = itemView.findViewById(com.Manuel.routetracker.R.id.tvRouteSummary);
             }
         }
     }

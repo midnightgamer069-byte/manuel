@@ -46,17 +46,17 @@ public class CustomRouteActivity extends AppCompatActivity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_route);
+        setContentView(com.Manuel.routetracker.R.layout.activity_custom_route);
         Configuration.getInstance().setUserAgentValue(getPackageName());
 
-        mapView = findViewById(R.id.customMapView);
-        tvInfo = findViewById(R.id.tvCustomInfo);
+        mapView = findViewById(com.Manuel.routetracker.R.id.customMapView);
+        tvInfo = findViewById(com.Manuel.routetracker.R.id.tvCustomInfo);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setMultiTouchControls(true);
         mapView.getController().setZoom(15.0);
         mapView.getController().setCenter(new GeoPoint(19.4326, -99.1332));
 
-        findViewById(R.id.btnCloseCustom).setOnClickListener(v -> finish());
+        findViewById(com.Manuel.routetracker.R.id.btnCloseCustom).setOnClickListener(v -> finish());
 
         setupTapOverlay();
         setupButtons();
@@ -108,9 +108,9 @@ public class CustomRouteActivity extends AppCompatActivity {
     }
 
     private void setupButtons() {
-        Button save = findViewById(R.id.btnSaveCustom);
-        Button start = findViewById(R.id.btnStartCustom);
-        Button finish = findViewById(R.id.btnFinishCustom);
+        Button save = findViewById(com.Manuel.routetracker.R.id.btnSaveCustom);
+        Button start = findViewById(com.Manuel.routetracker.R.id.btnStartCustom);
+        Button finish = findViewById(com.Manuel.routetracker.R.id.btnFinishCustom);
 
         save.setOnClickListener(v -> {
             if (startMarker == null || endMarker == null) {
@@ -143,7 +143,7 @@ public class CustomRouteActivity extends AppCompatActivity {
     }
 
     private void setupRecycler() {
-        RecyclerView rv = findViewById(R.id.rvCustomHistory);
+        RecyclerView rv = findViewById(com.Manuel.routetracker.R.id.rvCustomHistory);
         rv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CustomAdapter(routes);
         rv.setAdapter(adapter);
@@ -184,7 +184,7 @@ public class CustomRouteActivity extends AppCompatActivity {
     private class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.VH> {
         private final List<CustomRoute> items;
         CustomAdapter(List<CustomRoute> items){this.items=items;}
-        @NonNull @Override public VH onCreateViewHolder(@NonNull ViewGroup p,int v){return new VH(LayoutInflater.from(p.getContext()).inflate(R.layout.item_custom_route,p,false));}
+        @NonNull @Override public VH onCreateViewHolder(@NonNull ViewGroup p,int v){return new VH(LayoutInflater.from(p.getContext()).inflate(com.Manuel.routetracker.R.layout.item_custom_route,p,false));}
         @Override public void onBindViewHolder(@NonNull VH h,int i){
             CustomRoute r=items.get(i);
             h.title.setText(String.format(Locale.getDefault(),"Ruta %.5f,%.5f -> %.5f,%.5f",r.slat,r.slon,r.elat,r.elon));
@@ -198,6 +198,6 @@ public class CustomRouteActivity extends AppCompatActivity {
             });
         }
         @Override public int getItemCount(){return items.size();}
-        class VH extends RecyclerView.ViewHolder{ TextView title,sub; VH(@NonNull View item){super(item);title=item.findViewById(R.id.tvCustomTitle);sub=item.findViewById(R.id.tvCustomSubtitle);} }
+        class VH extends RecyclerView.ViewHolder{ TextView title,sub; VH(@NonNull View item){super(item);title=item.findViewById(com.Manuel.routetracker.R.id.tvCustomTitle);sub=item.findViewById(com.Manuel.routetracker.R.id.tvCustomSubtitle);} }
     }
 }
