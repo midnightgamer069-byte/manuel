@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Route Tracker Pro</string>
+    <string name="welcome_message">¡Bienvenido! Registra tus caminatas, explora rutas y supera tus mejores tiempos.</string>
 </resources>

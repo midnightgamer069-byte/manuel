@@ -65,6 +65,15 @@
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/tvWelcome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/welcome_message"
+                android:textColor="#E0F2FE"
+                android:textSize="13sp" />
+
+            <TextView
                 android:id="@+id/tvStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
